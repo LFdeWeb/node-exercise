@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>测试脚本</title>
+    <meta charset="utf-8">
+</head>
+<style>
+    .tanchaung {
+        height: 100px;
+        width: 100px;
+        border: red 1px solid;
+    }
+</style>
+<body>
+脚本测试
+<button onclick="clickbutton()">点击显示弹窗</button>
+<div id='tanchuang' style="display: none" class="tanchaung">
+    <button id="btn" onclick="youhuiquan()">优惠券</button>
+</div>
+
+</body>
+<script>
+  function clickbutton () {
+    document.getElementById('tanchuang').style.display = 'block'
+  }
+function youhuiquan () {
+  console.log(1111)
+}
+
+</script>
+</html>

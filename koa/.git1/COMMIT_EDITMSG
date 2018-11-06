@@ -1,0 +1,1 @@
+ctx获取get请求,可以从ctx.query/queryString,或者ctx.request.query/queryString
