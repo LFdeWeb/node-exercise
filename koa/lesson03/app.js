@@ -6,10 +6,10 @@ const fs = require('fs')
 const app = new Koa()
 
 function service (ctx) {
-  const cnodeUrl = 'https://cnodejs.org/'
+  const cnodeUrl = 'https://cnodejs.org'
   axios.get('https://cnodejs.org').then((res) => {
     var $ = cheerio.load(res.data)
-    var items = [];
+    var items = []
     var content = $('#topic_list .topic_title').text()
     $('#topic_list .topic_title').each((index, element) => {
       items.push({
@@ -20,16 +20,30 @@ function service (ctx) {
     items = JSON.stringify(items)
     fs.writeFile('2.js', items, function (error) {
       console.log('文件写入完毕')
-      console.log(error)
+      console.log('error', error)
     })
-    resolve(items)
+    return items
   }).then((items) => {
-    axios.get(item[0].href).then((res) => {
-      console.log(res)
-      console.log('请求内容完成')
-
+    // console.log(items)
+    items = JSON.parse(items)
+    items.forEach((item, index) => {
+      if (index < 3) {
+        axios.get(item.href).then((res) => {
+          // console.log('请求具体页面数据', res)
+          $ = cheerio.load(res.data)
+          let name = $('.user_name a').text()
+          console.log(name)
+          fs.writeFile('topicName.txt', name, {flag: 'a'}, function (error) {
+            if (error) {
+              console.log('获取用户名称出错')
+            }
+            console.log('用户名称写入完成')
+          })
+        })
+      }
     })
-  }).catch((res)=>{
+
+  }).catch((res) => {
     console.log('qingqiushibai', res)
   })
 }
